@@ -1,0 +1,1494 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <!-- <script type="text/javascript" src="./jquery.snippet.min.js"></script> -->
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+
+
+        var logicCanvasWidth = 950;
+        var logicCanvasHeight = 600;
+
+        var logicMarginY = 40;
+        var logicMarginX = 20;
+
+
+        var outlineWidth = 200;
+        var outlineHeight = 140;
+        var outlineCenterMagin = 60;
+
+        var ethnetCenterMargin = 20;
+
+        var ethnetHeight = 30;
+
+        var switchHeight = 32;
+
+        var smbWidth = 150;
+        var smbHeight = 30;
+
+        var smbMarginTop = outlineHeight +logicMarginY;
+        var smbVerticalMargin = 60;
+
+        var rawData = {
+            "clusterNetworks": [
+              {
+                "name": "Cluster Network 1",
+                "state": 3,
+                "metric": 40000,
+                "role": 1,
+                "subnets": []
+              },
+              {
+                "name": "SMB1",
+                "state": 3,
+                "metric": 70240,
+                "role": 3,
+                "subnets": [
+                  "10.240.200.128/25"
+                ]
+              },
+              {
+                "name": "SMB2",
+                "state": 3,
+                "metric": 70241,
+                "role": 3,
+                "subnets": [
+                  "192.168.12.0/24"
+                ]
+              }
+            ],
+            "clusterNodes": [
+              {
+                "name": "S2D01",
+                "netAdapters": [
+                  {
+                    "name": "Ethernet 3",
+                    "network": "SMB1",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "10.240.200.151",
+                        "prefixLength": 25,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-DD-01-B4",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet 3",
+                      "interfaceAlias": "Ethernet 3",
+                      "ifIndex": 22,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "ifName": "ethernet_32775",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-DD-01-B4",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{DE2F81D3-412B-4C58-B3E3-BEEC06C025C7}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet 3",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{DE2F81D3-412B-4C58-B3E3-BEEC06C025C7}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D01.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BADD01B4"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BADD01B4",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{DE2F81D3-412B-4C58-B3E3-BEEC06C025C7}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        28
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "interfaceGuid": "{DE2F81D3-412B-4C58-B3E3-BEEC06C025C7}",
+                      "interfaceIndex": 22,
+                      "interfaceName": "ethernet_32775",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399733518336,
+                      "netLuidIndex": 32775,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFDD01B400",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  },
+                  {
+                    "name": "Ethernet 2",
+                    "network": "SMB2",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "192.168.12.1",
+                        "prefixLength": 24,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-DD-01-B5",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet 2",
+                      "interfaceAlias": "Ethernet 2",
+                      "ifIndex": 15,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2",
+                      "ifName": "ethernet_32773",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-DD-01-B5",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{AC13A68F-C07A-497A-8D18-6B3F424B8A14}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet 2",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{AC13A68F-C07A-497A-8D18-6B3F424B8A14}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D01.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BADD01B5"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BADD01B5",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{AC13A68F-C07A-497A-8D18-6B3F424B8A14}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        31
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "interfaceGuid": "{AC13A68F-C07A-497A-8D18-6B3F424B8A14}",
+                      "interfaceIndex": 15,
+                      "interfaceName": "ethernet_32773",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399699963904,
+                      "netLuidIndex": 32773,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFDD01B401",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  }
+                ],
+                "vmSwitches": [],
+                "vNetAdapters":[
+                     {
+                    "name": "vEthernet 1",
+                    "network": "SMB1"
+                     },
+                     {
+                    "name": "vEthernet 2",
+                    "network": "SMB2"
+                     },
+                ]
+              },
+              {
+                "name": "S2D02",
+                "netAdapters": [
+                  {
+                    "name": "Ethernet 2",
+                    "network": "Cluster Network 1",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "169.254.95.120",
+                        "prefixLength": 24,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "0A-94-EF-3A-5A-E9",
+                      "status": "Up",
+                      "linkSpeed": "9.7 Mbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "Unspecified",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2006-10-06 Version 6.2.0.127 NDIS 6.30",
+                      "driverFileName": "usb80236.sys",
+                      "ndisVersion": "6.30",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet 2",
+                      "interfaceAlias": "Ethernet 2",
+                      "ifIndex": 10,
+                      "ifDesc": "IBM USB Remote NDIS Network Device",
+                      "ifName": "ethernet_32772",
+                      "driverVersion": "6.2.0.127",
+                      "linkLayerAddress": "0A-94-EF-3A-5A-E9",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{5FB55E73-3964-4439-97C5-48957D479E54}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet 2",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{5FB55E73-3964-4439-97C5-48957D479E54}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D02.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 9728000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": null,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "0A94EF3A5AE9"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "0A94EF3A5AE9",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "USB\\VID_04B3&PID_4010",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{5FB55E73-3964-4439-97C5-48957D479E54}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2006-10-06",
+                      "driverDateData": 128045664000000000,
+                      "driverDescription": "IBM USB Remote NDIS Network Device",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 30,
+                      "driverName": "\\SystemRoot\\System32\\drivers\\usb80236.sys",
+                      "driverProvider": "Microsoft",
+                      "driverVersionString": "6.2.0.127",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        34
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "IBM USB Remote NDIS Network Device",
+                      "interfaceGuid": "{5FB55E73-3964-4439-97C5-48957D479E54}",
+                      "interfaceIndex": 10,
+                      "interfaceName": "ethernet_32772",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 6,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 0,
+                      "minorDriverVersion": 2,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 0,
+                      "netLuid": 1689399683186688,
+                      "netLuidIndex": 32772,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "USB\\VID_04B3&PID_4010\\6&2D9D3563&0&5",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 9728000,
+                      "state": 2,
+                      "transmitLinkSpeed": 9728000,
+                      "virtual": false,
+                      "vlanID": null,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  },
+                  {
+                    "name": "Ethernet",
+                    "network": "SMB1",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "10.240.200.152",
+                        "prefixLength": 25,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-E1-9A-94",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet",
+                      "interfaceAlias": "Ethernet",
+                      "ifIndex": 21,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2",
+                      "ifName": "ethernet_32770",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-E1-9A-94",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{D3D1550C-06A0-46FC-AA56-BAD40A1EC7BA}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{D3D1550C-06A0-46FC-AA56-BAD40A1EC7BA}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D02.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BAE19A94"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BAE19A94",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{D3D1550C-06A0-46FC-AA56-BAD40A1EC7BA}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        28
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "interfaceGuid": "{D3D1550C-06A0-46FC-AA56-BAD40A1EC7BA}",
+                      "interfaceIndex": 21,
+                      "interfaceName": "ethernet_32770",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399649632256,
+                      "netLuidIndex": 32770,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFE19A9400",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  },
+                  {
+                    "name": "Ethernet 3",
+                    "network": "SMB2",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "192.168.12.2",
+                        "prefixLength": 24,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-E1-9A-95",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet 3",
+                      "interfaceAlias": "Ethernet 3",
+                      "ifIndex": 11,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "ifName": "ethernet_32773",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-E1-9A-95",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{69C68B47-129A-4AE4-9F70-4DC7DF612630}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet 3",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{69C68B47-129A-4AE4-9F70-4DC7DF612630}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D02.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BAE19A95"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BAE19A95",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{69C68B47-129A-4AE4-9F70-4DC7DF612630}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        31
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "interfaceGuid": "{69C68B47-129A-4AE4-9F70-4DC7DF612630}",
+                      "interfaceIndex": 11,
+                      "interfaceName": "ethernet_32773",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399699963904,
+                      "netLuidIndex": 32773,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFE19A9401",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  }
+                ],
+                "vmSwitches": [ {
+                    "name": "S2D Switch",
+                    "network": "Cluster Network 1"
+                    }]
+              },
+              {
+                "name": "S2D03",
+                "netAdapters": [
+                  {
+                    "name": "Ethernet 2",
+                    "network": "SMB1",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "10.240.200.153",
+                        "prefixLength": 25,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-E1-9A-B1",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet 2",
+                      "interfaceAlias": "Ethernet 2",
+                      "ifIndex": 5,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "ifName": "ethernet_32770",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-E1-9A-B1",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{316E2C5E-BA58-446A-90B1-9F05D41529EB}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet 2",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{316E2C5E-BA58-446A-90B1-9F05D41529EB}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D03.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BAE19AB1"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BAE19AB1",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{316E2C5E-BA58-446A-90B1-9F05D41529EB}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        31
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2 #2",
+                      "interfaceGuid": "{316E2C5E-BA58-446A-90B1-9F05D41529EB}",
+                      "interfaceIndex": 5,
+                      "interfaceName": "ethernet_32770",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399649632256,
+                      "netLuidIndex": 32770,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFE19AB001",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  },
+                  {
+                    "name": "Ethernet",
+                    "network": "SMB2",
+                    "ipAddresses": [
+                      {
+                        "ipAddress": "192.168.12.3",
+                        "prefixLength": 24,
+                        "addressFamily": 2,
+                        "type": 1
+                      }
+                    ],
+                    "properties": {
+                      "macAddress": "90-E2-BA-E1-9A-B0",
+                      "status": "Up",
+                      "linkSpeed": "10 Gbps",
+                      "mediaType": "802.3",
+                      "physicalMediaType": "802.3",
+                      "adminStatus": 1,
+                      "mediaConnectionState": 1,
+                      "driverInformation": "Driver Date 2017-10-20 Version 4.1.77.0 NDIS 6.60",
+                      "driverFileName": "ixn65x64.sys",
+                      "ndisVersion": "6.60",
+                      "ifOperStatus": 1,
+                      "ifAlias": "Ethernet",
+                      "interfaceAlias": "Ethernet",
+                      "ifIndex": 16,
+                      "ifDesc": "Intel(R) Ethernet Server Adapter X520-2",
+                      "ifName": "ethernet_32769",
+                      "driverVersion": "4.1.77.0",
+                      "linkLayerAddress": "90-E2-BA-E1-9A-B0",
+                      "caption": null,
+                      "description": null,
+                      "elementName": null,
+                      "instanceID": "{C01A4507-045A-406A-8891-C9CAA1050A6C}",
+                      "communicationStatus": null,
+                      "detailedStatus": null,
+                      "healthState": null,
+                      "installDate": null,
+                      "name": "Ethernet",
+                      "operatingStatus": null,
+                      "operationalStatus": null,
+                      "primaryStatus": null,
+                      "statusDescriptions": null,
+                      "availableRequestedStates": null,
+                      "enabledDefault": 2,
+                      "enabledState": 5,
+                      "otherEnabledState": null,
+                      "requestedState": 12,
+                      "timeOfLastStateChange": null,
+                      "transitioningToState": 12,
+                      "additionalAvailability": null,
+                      "availability": null,
+                      "creationClassName": "MSFT_NetAdapter",
+                      "deviceID": "{C01A4507-045A-406A-8891-C9CAA1050A6C}",
+                      "errorCleared": null,
+                      "errorDescription": null,
+                      "identifyingDescriptions": null,
+                      "lastErrorCode": null,
+                      "maxQuiesceTime": null,
+                      "otherIdentifyingInfo": null,
+                      "powerManagementCapabilities": null,
+                      "powerManagementSupported": null,
+                      "powerOnHours": null,
+                      "statusInfo": null,
+                      "systemCreationClassName": "CIM_NetworkPort",
+                      "systemName": "S2D03.lenovo-s2d.local",
+                      "totalPowerOnHours": null,
+                      "maxSpeed": null,
+                      "otherPortType": null,
+                      "portType": null,
+                      "requestedSpeed": null,
+                      "speed": 10000000000,
+                      "usageRestriction": null,
+                      "activeMaximumTransmissionUnit": 1500,
+                      "autoSense": null,
+                      "fullDuplex": true,
+                      "linkTechnology": null,
+                      "networkAddresses": [
+                        "90E2BAE19AB0"
+                      ],
+                      "otherLinkTechnology": null,
+                      "otherNetworkPortType": null,
+                      "permanentAddress": "90E2BAE19AB0",
+                      "portNumber": 0,
+                      "supportedMaximumTransmissionUnit": null,
+                      "adminLocked": false,
+                      "componentID": "pci\\ven_8086&dev_10fb&subsys_7a128086",
+                      "connectorPresent": true,
+                      "deviceName": "\\Device\\{C01A4507-045A-406A-8891-C9CAA1050A6C}",
+                      "deviceWakeUpEnable": false,
+                      "driverDate": "2017-10-20",
+                      "driverDateData": 131529312000000000,
+                      "driverDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "driverMajorNdisVersion": 6,
+                      "driverMinorNdisVersion": 60,
+                      "driverName": "\\SystemRoot\\system32\\DRIVERS\\ixn65x64.sys",
+                      "driverProvider": "Intel",
+                      "driverVersionString": "4.1.77.0",
+                      "endPointInterface": false,
+                      "hardwareInterface": true,
+                      "hidden": false,
+                      "higherLayerInterfaceIndices": [
+                        28
+                      ],
+                      "imFilter": false,
+                      "interfaceAdminStatus": 1,
+                      "interfaceDescription": "Intel(R) Ethernet Server Adapter X520-2",
+                      "interfaceGuid": "{C01A4507-045A-406A-8891-C9CAA1050A6C}",
+                      "interfaceIndex": 16,
+                      "interfaceName": "ethernet_32769",
+                      "interfaceOperationalStatus": 1,
+                      "interfaceType": 6,
+                      "iSCSIInterface": false,
+                      "lowerLayerInterfaceIndices": null,
+                      "majorDriverVersion": 4,
+                      "mediaConnectState": 1,
+                      "mediaDuplexState": 2,
+                      "minorDriverVersion": 1,
+                      "mtuSize": 1500,
+                      "ndisMedium": 0,
+                      "ndisPhysicalMedium": 14,
+                      "netLuid": 1689399632855040,
+                      "netLuidIndex": 32769,
+                      "notUserRemovable": false,
+                      "operationalStatusDownDefaultPortNotAuthenticated": false,
+                      "operationalStatusDownInterfacePaused": false,
+                      "operationalStatusDownLowPowerState": false,
+                      "operationalStatusDownMediaDisconnected": false,
+                      "pnpDeviceID": "PCI\\VEN_8086&DEV_10FB&SUBSYS_7A128086&REV_01\\90E2BAFFFFE19AB000",
+                      "promiscuousMode": false,
+                      "receiveLinkSpeed": 10000000000,
+                      "state": 2,
+                      "transmitLinkSpeed": 10000000000,
+                      "virtual": false,
+                      "vlanID": 0,
+                      "wdmInterface": false,
+                      "psComputerName": null
+                    }
+                  }
+                ],
+                "vmSwitches": []
+              }
+            ]
+        }
+
+        var smbColor = ['255, 185, 2', "0, 188, 242", "180, 160, 255", "0, 178, 148"];
+
+        var canvas;
+
+        var stage; // 创建一个舞台对象
+        var scene ;
+        var newscene;
+        var itemContainer ;
+        var labelContainer ;
+
+        $(document).ready(function () {
+
+            function drawOutline(text, startX, startY){
+             var imgNode = new JTopo.Node('');
+             imgNode.setBound(startX + 10, startY + 10, 36, 24); // 同时设置大小及位置
+             imgNode.setImage('./node.png');
+             imgNode.zIndex = 2;
+             itemContainer.add(imgNode);
+             scene.add(imgNode);
+
+             var node = new JTopo.Node(text);
+             node.textPosition = "Top_Left";
+             node.textOffsetX = 90; // 文字向下偏移8个像素
+             node.textOffsetY = 40; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.font = '14px Consolas';
+             node.setLocation(startX,startY);
+             node.setSize(outlineWidth, outlineHeight);
+             node.borderWidth = 2; // 边框的宽度
+             node.borderColor = '238,238,238'; //边框颜色
+             node.fillColor = '255, 255, 255';
+             node.shadow = true;
+             node.shadowColor = 'rgba(221,221,221,0.5)';
+             node.shadowBlur = 10;
+             node.shadowOffsetX  = 1;
+             node.shadowOffsetY = 1;
+             node.dragable = false;
+             node.zIndex = 1;
+
+             scene.add(node);
+             itemContainer.add(node);
+             return node;
+           }
+
+            function drawItemWithinOutline(text, startX, startY, w, h, color){
+             var node = new JTopo.Node(text);
+             node.textPosition = "Middle_Center";
+             node.textOffsetY = -1; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.font = '10px';
+             node.setLocation(startX,startY);
+             node.setSize(w, h);
+             node.borderWidth = 1;
+             node.borderColor = '238, 238, 238';
+             node.fillColor = color;
+             node.zIndex = 1;
+             node.paintSelected = function(a){
+
+                 a.strokeStyle = "rgba(50, 123, 212, 1)";
+                 a.fillStyle = "rgba("+node.fillColor+",1)";
+
+                 a.lineWidth = 1;
+                 a.strokeRect(-this.width / 2 +2, -this.height / 2 +2, this.width -4, this.height-4);
+                 a.fillRect(-this.width / 2 +2, -this.height / 2+2, this.width-4, this.height-4);
+
+                 a.fillStyle = "#327BD4";
+                 a.fillText(node.text,-node.text.length*2.5,9);
+
+                 a.restore();
+
+             }
+             node.paintMouseover = function(a){
+
+                 a.strokeStyle = "rgba(50, 123, 212, 1)";
+                 a.fillStyle = "rgba("+node.fillColor+",1)";
+
+                 a.lineWidth = 1;
+                 a.strokeRect(-this.width / 2 +2, -this.height / 2 +2, this.width -4, this.height-4);
+                 a.fillRect(-this.width / 2 +2, -this.height / 2+2, this.width-4, this.height-4);
+
+                 a.fillStyle = "rgba("+node.fontColor+",1)";
+                 a.fillText(node.text,-node.text.length*2.5,9);
+
+                 a.restore();
+
+             }
+             scene.add(node);
+             itemContainer.add(node);
+             return node;
+           }
+
+            function drawCircle(startX, startY, color){
+                var circleNode = new JTopo.Node();
+                circleNode.setSize(10, 10);
+                circleNode.borderWidth = 2;
+                circleNode.borderRadius = 6;
+                circleNode.borderColor =  color;
+                circleNode.fillColor = '255, 255,255'; // 填充颜色
+                circleNode.setLocation(startX, startY);
+                circleNode.zIndex= 7;
+                scene.add(circleNode);
+                labelContainer.add(circleNode);
+                return circleNode;
+           }
+
+            function drawSMBLabel(startX, startY, color, text){
+                var smbNode = new JTopo.Node(text);
+                smbNode.textPosition = "Middle_Center";
+                smbNode.textOffsetY = -12;
+                smbNode.font = '14px Consolas';
+                smbNode.fontColor = '0,0,0';
+                smbNode.setSize(smbWidth, smbHeight);
+                smbNode.fillColor = color; // 填充颜色
+                smbNode.setLocation(startX, startY);
+                smbNode.zIndex= 6;
+                smbNode.dragable = false;
+                scene.add(smbNode);
+                labelContainer.add(smbNode);
+                return smbNode;
+           }
+
+           function drawSMBLabel1(startX, startY, text){
+                var smbNode = new JTopo.TextNode(text);
+                smbNode.textPosition = "Middle_Center";
+                smbNode.textOffsetY = 1;
+                smbNode.fontColor = '0,0,0';
+                smbNode.font = '11px Consolas';
+                smbNode.setLocation(startX+ 25, startY+ 5);
+                smbNode.zIndex= 7;
+                smbNode.dragable = false;
+                scene.add(smbNode);
+                labelContainer.add(smbNode);
+                return smbNode;
+           }
+
+            function drawLink(node1, node2, color, dashedPattern){
+               var link = new JTopo.Link(node1, node2, "");
+                link.lineWidth = 1; // 线宽
+                link.strokeColor =  color; // 填充颜色
+                link.zIndex = 2;
+                link.dashedPattern = dashedPattern;
+                link.paintSelected = function(){
+                }
+                scene.add(link);
+
+           }
+
+            function drawFoldLink(nodeA, nodeZ, color) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, "");
+                link.direction=  'vertical';
+                // link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 1; // 线宽
+
+                link.strokeColor = color; // 线条颜色随机
+                link.zIndex= 2;
+                link.paint = function(g){
+                    g.beginPath();
+                    g.moveTo(nodeA.getBound().left + nodeA.getBound().width /2, nodeA.getBound().bottom);
+                    g.strokeStyle = 'rgba('+nodeZ.fillColor+',1)';
+                    g.lineTo(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 16);
+                    g.stroke();
+                    g.closePath();
+                    g.save();
+
+                    g.beginPath();
+                    g.fillStyle = 'rgba('+nodeZ.fillColor+',1)';
+                    g.arc(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 15, 3, 0, 2*Math.PI);
+                    g.fill();
+                    g.closePath();
+                    g.restore();
+
+                    // g.beginPath();
+                    // g.fillStyle = 'rgba(255,255,255,1)';
+                    // g.arc(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 16, 3, 0, 2*Math.PI);
+                    // g.fill();
+                    // g.closePath();
+                    // g.restore();
+
+                };
+                scene.add(link);
+                return link;
+            }
+
+            function drawBlank(startX, startY, w, h, zIndex){
+             var node = new JTopo.Node("");
+             node.setLocation(startX,startY);
+             node.setSize(w, h);
+             node.fillColor = "255,255,255";
+             node.dragable = false;
+             node.zIndex = zIndex;
+             node.paintSelected = function(){
+             }
+             scene.add(node);
+           }
+
+            function drawContainer(dragble){
+                var container = new JTopo.Container('');
+                container.fillColor = '255,255,255';
+                container.onselect = null;
+                container.dragable = dragble;
+                container.childDragble = false;
+                container.areaSelect = false;
+                container.paintSelected = function(){
+                 }
+                scene.add(container);
+                return container;
+            }
+
+            function drawArrow(startX, startY, type){
+                 var arrNode = new JTopo.Node('');
+                 var leftHoverImg = new Image();
+                 var rightHoverImg = new Image();
+                 leftHoverImg.src = './left_hover.png';
+                 rightHoverImg.src = './right_hover.png';
+                 arrNode.setBound(startX, startY, 20, 16); // 同时设置大小及位置
+
+                 if(type === 0 ){
+                     arrNode.setImage('./left.png');
+                 }else {
+                     arrNode.setImage('./right.png');
+                 }
+                 arrNode.zIndex = 4;
+                 arrNode.dragable = false;
+                 //var animation;
+                // arrNode.paintSelected= function(a){}
+                 arrNode.click(function(event){
+
+                    if( type === 0){
+                        if (itemContainer.x < logicMarginY){
+                            itemContainer.selectedLocation = {x:itemContainer.x,y:itemContainer.y};
+                            var i = 0;
+                            var timer = setInterval(function(){
+                                if (itemContainer.x < logicMarginY){
+                                    itemContainer.mousedragHandler({dx: 13, dy: 0})
+                                    itemContainer.selectedLocation = {x: itemContainer.x, y: itemContainer.y};
+                                    i += 1;
+                                    if(i == 20 || itemContainer.x > logicMarginY){
+                                        clearInterval(timer);
+                                    }
+                                }else {
+                                    if (timer){
+                                        clearInterval(timer);
+                                    }
+                                }
+                            }, 25);
+                        }
+                    } else{
+                        if (itemContainer.x > -1 * (rawData.clusterNodes.length - 1) * 220 - 40) {
+                            itemContainer.selectedLocation = {x: itemContainer.x, y: itemContainer.y};
+                            var i = 0;
+                            var timer = setInterval(function(){
+                                if (itemContainer.x > -1 * (rawData.clusterNodes.length - 1) * 220 - 40) {
+                                    itemContainer.mousedragHandler({dx: -13, dy: 0})
+                                    itemContainer.selectedLocation = {x: itemContainer.x, y: itemContainer.y}
+                                    i += 1;
+                                    if(i == 20 || itemContainer.x < -logicCanvasWidth){
+                                        if (timer){
+                                            clearInterval(timer);
+                                        }
+                                    }
+                                }else {
+                                    if (timer){
+                                        clearInterval(timer);
+                                    }
+                                }
+                            }, 25);
+
+                        }
+                    }
+                 });
+                 arrNode.paintSelected = function(a){
+                     if( type == 0 ){
+                         a.drawImage(leftHoverImg,-10, -8, 20, 16);
+                         a.restore();
+                     }else {
+                         a.drawImage(rightHoverImg,-10, -8, 20, 16);
+                         a.restore();
+                     }
+
+                 }
+                 scene.add(arrNode);
+            }
+
+            function initNetworkView(){
+                canvas = document.getElementById('canvas');
+                canvas.height = logicCanvasHeight;
+                canvas.width = logicCanvasWidth;
+                 $('#container').width(logicCanvasWidth);
+                stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+                scene = new JTopo.Scene(stage); // 创建一个场景对象
+                 newscene = new JTopo.Scene(stage); // 创建一个场景对象
+                scene.zIndex = 1;
+
+                newscene.zIndex = 2;
+                //stage.wheelZoom = 1.2
+                scene.mode = 'select';
+                scene.areaSelect = false;
+
+
+            }
+
+
+
+            function drawNetworkView(){
+                scene.clear();
+
+                drawBlank(0, 0, logicMarginX + 10, logicCanvasHeight, 3);
+                drawBlank(logicCanvasWidth - logicMarginX - smbWidth - 5, 0, smbWidth + logicMarginX + 5, logicCanvasHeight, 3)
+                drawBlank(0, 0, logicCanvasWidth, 30, 5);
+
+                drawArrow(5, outlineHeight + logicMarginX, 0);
+                drawArrow(logicCanvasWidth - smbWidth - logicMarginX, outlineHeight + logicMarginX, 1);
+
+                itemContainer = drawContainer(false);
+                labelContainer = drawContainer(false);
+
+                var startX = logicMarginX;
+                var startY = logicMarginY;
+
+                var smbList = {};
+
+                for(var i = 0; i<rawData.clusterNetworks.length; i++) {
+                    var leftCircle = drawCircle(logicMarginX, startY + smbMarginTop + smbVerticalMargin * i, smbColor[i]);
+
+                    var circleNode = new JTopo.Node();
+                    circleNode.setSize(1, 1);
+                    circleNode.fillColor = smbColor[i]; // 填充颜色
+                    circleNode.setLocation(logicCanvasWidth - logicMarginX - smbWidth - 30, startY +4+ smbMarginTop + smbVerticalMargin * i);
+                    circleNode.zIndex= 7;
+                    scene.add(circleNode);
+                    labelContainer.add(circleNode);
+
+                    var rightCircle = drawCircle(logicCanvasWidth - logicMarginX - smbWidth-4, startY + smbMarginTop + smbVerticalMargin * i, smbColor[i]);
+                    var smbLabel = drawSMBLabel(logicCanvasWidth - logicMarginX - smbWidth, startY + smbMarginTop + smbVerticalMargin * i - 10, smbColor[i], rawData.clusterNetworks[i].name);
+                    drawSMBLabel1(logicCanvasWidth - logicMarginX - smbWidth, startY + smbMarginTop + smbVerticalMargin * i - 10, rawData.clusterNetworks[i].subnets.join("\n"));
+
+                    smbList[rawData.clusterNetworks[i].name] = smbLabel;
+                    drawLink(leftCircle, circleNode, smbColor[i], null);
+                    drawLink(rightCircle, circleNode, smbColor[i], 5);
+                }
+
+                var node = new JTopo.Node("just test");
+                 node.setLocation(startX,startY);
+                 node.setSize(50, 50);
+                 node.fillColor = "255,255,255";
+                 node.dragable = false;
+                 node.zIndex = 90;
+                newscene.add(node);
+
+                startX += logicMarginX;
+
+                for(var i = 0; i<rawData.clusterNodes.length; i++) {
+                     var cNetItem = rawData.clusterNodes[i];
+                     drawOutline(cNetItem.name, startX, startY);
+
+                     //virutal layer
+                     if( cNetItem.vNetAdapters && cNetItem.vNetAdapters.length>0) {
+                         var ethnetWidth = (outlineWidth - ethnetCenterMargin * (cNetItem.vNetAdapters.length - 1)) / cNetItem.vNetAdapters.length;
+                         for (var j = 0; j < cNetItem.vNetAdapters.length; j++) {
+                             var ethnetNode = drawItemWithinOutline(cNetItem.vNetAdapters[j].name, startX + (ethnetWidth + ethnetCenterMargin) * j, startY + outlineHeight - 2 * ethnetHeight - switchHeight, ethnetWidth, ethnetHeight, '244, 253, 255');
+                             if(cNetItem.vNetAdapters[j].network){
+                                 drawFoldLink(ethnetNode, smbList[cNetItem.vNetAdapters[j].network], smbList[cNetItem.vNetAdapters[j].network].fillColor)
+                             }
+
+                         }
+                     }
+
+                     //switch layer
+                     if(cNetItem.vmSwitches && cNetItem.vmSwitches.length> 0){
+                         var switchWidth = (outlineWidth - ethnetCenterMargin * (cNetItem.vmSwitches.length - 1)) / cNetItem.vmSwitches.length ;
+                         for(var j = 0; j < cNetItem.vmSwitches.length; j++) {
+                             drawItemWithinOutline(cNetItem.vmSwitches[j].name, startX + (switchWidth + ethnetCenterMargin) * j , startY + outlineHeight - ethnetHeight - switchHeight, switchWidth, switchHeight, '244, 244, 244');
+                         }
+                     }
+                     // physical layer
+                     if( cNetItem.netAdapters && cNetItem.netAdapters.length> 0){
+                         var mellenoxWidth = (outlineWidth - ethnetCenterMargin * (cNetItem.netAdapters.length - 1)) / cNetItem.netAdapters.length ;
+                         for(var j = 0; j < cNetItem.netAdapters.length; j++){
+                            var ethnetNode = drawItemWithinOutline(cNetItem.netAdapters[j].name, startX + (mellenoxWidth + ethnetCenterMargin) * j , startY + outlineHeight - ethnetHeight, mellenoxWidth, ethnetHeight, '231, 250, 241');
+                            if(cNetItem.netAdapters[j].network){
+                                drawFoldLink(ethnetNode, smbList[cNetItem.netAdapters[j].network], smbList[cNetItem.netAdapters[j].network].fillColor)
+                            }
+                         }
+                     }
+                     startX += outlineWidth + outlineCenterMagin;
+
+                }
+            }
+
+            initNetworkView();
+            drawNetworkView();
+
+            window.onresize = function (){
+                if($('body').width()>1100){
+                    logicCanvasWidth = 1200
+                    canvas.height = logicCanvasHeight;
+                    canvas.width = logicCanvasWidth;
+                }else{
+                    logicCanvasWidth = 950
+                    canvas.height = logicCanvasHeight;
+                    canvas.width = logicCanvasWidth;
+                }
+                drawNetworkView();
+            }
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            /* width: 800px; */
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+
+</html>

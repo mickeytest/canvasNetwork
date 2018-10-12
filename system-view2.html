@@ -1,0 +1,183 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <!-- <script type="text/javascript" src="./jquery.snippet.min.js"></script> -->
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+        var _poolRowHeight = 200 * 0.6;
+        var _poolHeight = 88 * 0.75;
+        var _poolWidth = 650 * 0.75;
+        var _poolRowHeight = 150;
+        var _poolRowHeight2 = 570;
+        //var _diskRowHeight = 55;
+        var _diskRowWidth = 55;
+        var _diskOffsetX = 70;
+        var _diskWidth = 48 * 0.5;
+        var _diskHeight = 64 * 0.5;
+        var _ssdWidth = 41;
+        var _ssdHeight = 53.5;
+        var _ssdRowHeight = 80;
+        var _ssdColumnWidth = 180 * 0.8;
+        var _canvasWidth = 800;
+        var _canvanHeight = 1000;
+        var _ssdAmount = 8;
+        var _marginY = 50;
+        $(document).ready(function () {
+
+
+            // draw node
+            function newNode(x, y, w, h, text, pic, isNode = 0) {
+                var node = new JTopo.Node(text);
+                node.fontColor = '0,0,0';
+                node.setLocation(x, y);
+                node.setSize(w, h);
+                node.dragable = false;
+                node.textPosition = "Bottom_Center";
+                if (!pic) {
+                    if (w == 1 && h == 1)  {
+                        node.fillColor = '0, 0, 0';
+                    }else {
+                        node.fillColor = '255, 255, 255';
+                        node.borderRadius = 5; // 圆角
+                        node.borderWidth = 2; // 边框的宽度
+                        node.borderColor = '0,0,0'; //边框颜色
+                    }
+                } else { node.setImage(pic); }
+                if (isNode == 1) {
+                    node.textPosition = "Middle_Left";
+                    node.text = node.text + ' ';
+                } else if (isNode == 2) {
+                    node.textPosition = "Bottom_Left";
+                } else if (isNode == 3) {
+                    node.textPosition = "Middle_Center";
+                    node.fontColor = "255,255,255";
+                } else if (isNode == 4) {
+                    node.textPosition = "Top_Center";
+                }
+                scene.add(node);
+                return node;
+            }
+
+            // draw fold link
+            function newFoldLink(nodeA, nodeZ, text, direction, dashedPattern) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, text);
+                link.direction = direction == 1 ? 'vertical' : 'horizontal';
+                // link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 1; // 线宽
+                link.bundleOffset = 60; // 折线拐角处的长度
+                link.bundleGap = 20; // 线条之间的间隔
+                link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+                // link.strokeColor = JTopo.util.randomColor(); // 线条颜色随机
+                link.strokeColor = 'black'; // 线条颜色随机
+                link.dashedPattern = dashedPattern;
+                scene.add(link);
+                return link;
+            }
+
+            // draw disk list
+            function newNodeList(hostNode, amount = 1, x, y) {
+                var i = 0;
+                //var connection = newNode(x, y + _ssdHeight / 2, 1, 1);
+                //newFoldLink(hostNode, connection, '', 1);
+                var node = newNode(x - 15, y + _ssdHeight / 2 - _diskHeight / 2 - 15 , _diskRowWidth * amount, _diskHeight+ 30);
+
+                for (i = 0; i < amount; i++) {
+                    // draw disk
+                    var node = newNode(x + i *_diskRowWidth, y + _ssdHeight / 2 - _diskHeight / 2 - 5, _diskWidth, _diskHeight, 'disk-' + (i + 1), 'disk.PNG');
+                    newFoldLink(hostNode, node, '', 1);
+                }
+
+
+            }
+
+            // draw compelete SSD
+            function newSSD(nodes = 1, text, x, y) {
+                // draw SSD
+                // draw SSD
+                var SSD = newNode(x, y, _ssdWidth, _ssdHeight, text, 'ssd.PNG', 1);
+                newNodeList(SSD, nodes, x + _diskOffsetX, y);
+                return SSD;
+            }
+
+            // draw SSDs
+            function newSSDs(poolNode, SSDs) {
+                var i = 0;
+                var connection = new newNode((poolNode.getBound().left + poolNode.getBound().right) / 2, poolNode.getBound().bottom, 1, 1);
+                for (i = 0; i < SSDs; i++) {
+                    var SSD = newSSD(2, 'SSD-' + (i + 1), poolNode.getBound().left + _poolWidth / 2 + _diskRowWidth, poolNode.getBound().bottom + _ssdHeight/4 + i * _ssdRowHeight);
+                    newFoldLink(connection, SSD, '', 1);
+                }
+                return true;
+            }
+
+            function newPool(x, y, i, num, POOL, SSDs) {
+                var pool = newNode(x, y, _poolWidth, _poolHeight, 'pool-' + (i + 1), 'pool.PNG', 4);
+                POOL[i] = pool;
+                if (SSDs[i] == true) {
+                    SSDs[i] = newSSDs(POOL[i], _ssdAmount);
+                }
+                pool.mouseup(function (event) {
+                    scene.clear();
+                    if (SSDs[i] == true) {
+                        SSDs[i] = false;
+                        newPools(POOL[0].x, POOL[0].y, num, POOL, SSDs);
+                    }
+                    else {
+                        SSDs[i] = newSSDs(pool, _ssdAmount);
+                        newPools(POOL[0].x, POOL[0].y, num, POOL, SSDs);
+                    }
+                })
+            }
+
+            function newPools(x, y, num, POOL = null, SSDs = null) {
+                if (!POOL){POOL = Array(num);}
+                if (!SSDs){
+                    SSDs = Array(num);
+                    for (i = 0; i < num; i++) { SSDs[i] = false; }
+                }
+                for (i = 0; i < num; i++) {
+                    if (i == 0) { var res = newPool(x, y, i, num, POOL, SSDs); }
+                    else {
+                        var h = POOL[i - 1].getBound().top + ((SSDs[i - 1]) ?_poolRowHeight2:0);
+                        newPool(x, h + _poolRowHeight, i, num, POOL, SSDs);
+                    }
+                }
+            }
+
+            var canvas = document.getElementById('canvas');
+            canvas.height = _canvanHeight;
+            canvas.width = _canvasWidth;
+            $('#container').width(_canvasWidth);
+            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+            stage.wheelZoom = 1.2;
+
+            var startX = (_canvasWidth - _poolWidth) / 2;
+            // var ssdX = _canvasWidth / 2 + _ssdWidth;
+            var currentY = _marginY;
+            var pool = newPools(startX, currentY, 4);
+            //newSSDs(pool, _ssdAmount, ssdX, currentY + _poolRowHeight);
+
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            /* width: 800px; */
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+
+</html>

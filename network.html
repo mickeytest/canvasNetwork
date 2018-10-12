@@ -1,0 +1,353 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <!-- <script type="text/javascript" src="./jquery.snippet.min.js"></script> -->
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+
+
+        var logicCanvasWidth = 950;
+        var logicCanvasHeight = 600;
+
+        var logicMarginY = 80;
+        var logicMarginX = 20;
+
+        var outlineCenterMargin = 100;
+
+        var outlineWidth = 200;
+        var outlineHeight = 120;
+
+        var outlineWidthMargin = 10;
+        var ethnetCenterMargin = 6;     // |10[87]6[87]10|    | 10[
+
+        var ethnetHeight = 20;
+
+        var switchWidth = outlineWidth  - outlineWidthMargin * 2;
+        var switchHeight = 25;
+
+        var smbWidth = ( outlineCenterMargin + logicMarginX ) * 1.5;
+        var smbHeight = 30;
+
+
+        var rawData = {
+            networkItems: [
+                {
+                    name:'S2D01',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        },
+
+                        {
+                            name: "vEthnet 3",
+                            connection: "SMB3"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        },
+                        {
+                            name: "Mellenox 3",
+                            connection: "SMB3"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D02',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D03',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D04',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D05',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D06',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    swich: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                }
+            ],
+            smb:[
+                { name:"SMB1",
+                  ip: "10.10.11.0/24"
+                },
+                { name:"SMB2",
+                  ip: "10.10.11.0/24"
+                },
+                { name:"SMB3",
+                  ip: "10.10.11.0/24"
+                }
+            ]
+
+        }
+
+        var smbColor = ['155, 205, 70', "252, 137, 15", "6, 172, 201" ]
+
+
+        $(document).ready(function () {
+
+           function drawOutline(text, startX, startY){
+             var node = new JTopo.Node(text);
+             node.textPosition = "Top_Center";
+             node.textOffsetY = 30; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.setLocation(startX,startY);
+             node.setSize(outlineWidth, outlineHeight);
+             node.dragable = false;
+             node.borderRadius = 5; // 圆角
+             node.borderWidth = 2; // 边框的宽度
+             node.borderColor = '15,40,155'; //边框颜色
+             node.fillColor = '255, 255, 255';
+             scene.add(node);
+             return node;
+           }
+
+           function drawItemWithinOutline(text, startX, startY, w, h, color){
+             var node = new JTopo.Node(text);
+             node.textPosition = "Middle_Center";
+             node.textOffsetY = -1; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.font = '10px';
+             node.setLocation(startX,startY);
+             node.setSize(w, h);
+             node.dragable = false;
+             node.fillColor = color;
+             scene.add(node);
+             return node;
+           }
+
+           function drawCircle(startX, startY, color){
+                var circleNode = new JTopo.Node();
+                circleNode.setSize(10, 10);
+                circleNode.borderWidth = 2;
+                circleNode.borderRadius = 6;
+                circleNode.borderColor =  color;
+                circleNode.fillColor = '255, 255,255'; // 填充颜色
+                circleNode.setLocation(startX, startY);
+                scene.add(circleNode);
+                return circleNode;
+           }
+
+           function drawSMBLabel(startX, startY, color, text){
+                var smbNode = new JTopo.Node(text);
+                // circleNode.radius = 4; // 半径
+                smbNode.textPosition = "Middle_Center";
+                smbNode.fontColor = '0,0,0';
+                smbNode.setSize(smbWidth, smbHeight);
+                smbNode.fillColor = color; // 填充颜色
+                smbNode.setLocation(startX, startY);
+                scene.add(smbNode);
+                return smbNode;
+           }
+
+           function drawLink(node1, node2, color){
+               var link = new JTopo.Link(node1, node2, "");
+                link.lineWidth = 1; // 线宽
+                link.strokeColor =  color; // 填充颜色
+                scene.add(link);
+           }
+
+           function drawFoldLink(nodeA, nodeZ, color) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, "");
+                link.direction=  'vertical';
+                // link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 1; // 线宽
+                link.bundleOffset = 60; // 折线拐角处的长度
+                link.bundleGap = 20; // 线条之间的间隔
+                link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+                // link.strokeColor = JTopo.util.randomColor(); // 线条颜色随机
+                link.strokeColor = color; // 线条颜色随机
+                link.zIndex= 5;
+                scene.add(link);
+                return link;
+            }
+
+            var canvas = document.getElementById('canvas');
+            canvas.height = logicCanvasHeight;
+            canvas.width = logicCanvasWidth;
+            $('#container').width(logicCanvasWidth);
+            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+            stage.wheelZoom = 1.2;
+
+            var startX = logicMarginX;
+            var startY = logicMarginY;
+
+            var smbList = {};
+
+
+            for(var i = 0; i<rawData.smb.length; i++) {
+                var leftCircle = drawCircle(logicMarginX, startY + 210 + 80 * i, smbColor[i]);
+                var rightCircle = drawCircle((logicMarginX + outlineWidth) * rawData.networkItems.length + outlineCenterMargin, startY + 210 + 80 * i, smbColor[i]);
+                var smbLabel = drawSMBLabel(logicMarginX + 2 * (outlineWidth + outlineWidthMargin) - (outlineCenterMargin / 4), startY + 200 + 80 * i, smbColor[i], rawData.smb[i].name+" "+  rawData.smb[i].ip);
+                smbList[rawData.smb[i].name] = smbLabel;
+                drawLink(leftCircle, smbLabel, smbColor[i]);
+                drawLink(rightCircle, smbLabel,  smbColor[i]);
+            }
+
+
+            for(var i = 0; i<rawData.networkItems.length; i++) {
+                 var cNetItem = rawData.networkItems[i];
+                 drawOutline(cNetItem.name, startX, startY);
+
+                 var ethnetWidth = (outlineWidth - 2 * outlineWidthMargin - ethnetCenterMargin * (cNetItem.ethnet.length - 1)) / cNetItem.ethnet.length ;
+                 for(var j = 0; j < cNetItem.ethnet.length; j++){
+                    var ethnetNode = drawItemWithinOutline(cNetItem.ethnet[j].name, startX + outlineWidthMargin + (ethnetWidth + ethnetCenterMargin) * j , startY + 55, ethnetWidth, ethnetHeight, '200,200,200');
+                    drawFoldLink(ethnetNode, smbList[cNetItem.ethnet[j].connection], smbList[cNetItem.ethnet[j].connection].fillColor)
+                 }
+                 drawItemWithinOutline(cNetItem.swich, startX + outlineWidthMargin, startY + 75, switchWidth, switchHeight, '220,220,220');
+
+                 var mellenoxWidth = (outlineWidth - 2 * outlineWidthMargin - ethnetCenterMargin * (cNetItem.mellenox.length - 1)) / cNetItem.mellenox.length ;
+                 for(var j = 0; j < cNetItem.mellenox.length; j++){
+                    drawItemWithinOutline(cNetItem.mellenox[j].name, startX + outlineWidthMargin + (mellenoxWidth + ethnetCenterMargin) * j , startY + 100, mellenoxWidth, ethnetHeight, '150,150,150');
+                 }
+
+                 startX += outlineWidth + logicMarginX;
+                 if ( i == 1 ){
+                     startX += outlineCenterMargin;
+                 }
+
+            }
+
+
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            /* width: 800px; */
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+
+</html>

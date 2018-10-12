@@ -1,0 +1,519 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <!-- <script type="text/javascript" src="./jquery.snippet.min.js"></script> -->
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+
+
+        var logicCanvasWidth = 1200;
+        var logicCanvasHeight = 600;
+
+        var logicMarginY = 40;
+        var logicMarginX = 20;
+
+
+        var outlineWidth = 200;
+        var outlineHeight = 240;
+        var outlineCenterMagin = 60;
+
+        var ethnetCenterMargin = 20;
+
+        var ethnetHeight = 30;
+
+        var switchWidth = outlineWidth;
+        var switchHeight = 32;
+
+        var smbWidth = 150;
+        var smbHeight = 30;
+
+        var smbMarginTop = outlineHeight + 2 * logicMarginY;
+        var smbVerticalMargin = 60;
+
+        var rawData = {
+            networkItems: [
+                {
+                    name:'S2D01',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        },
+
+                        {
+                            name: "vEthnet 3",
+                            connection: "SMB3"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        },
+                        {
+                            name: "Mellenox 3",
+                            connection: "SMB3"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D02',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D03',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D04',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D05',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                },
+                {
+                    name:'S2D06',
+                    ethnet:[
+                        {
+                            name: "vEthnet 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "vEthnet 2",
+                            connection: "SMB2"
+                        }
+                    ],
+                    switch: "S2DSwitch",
+                    mellenox:[
+                        {
+                            name: "Mellenox 1",
+                            connection: "SMB1"
+                        },
+                        {
+                            name: "Mellenox 2",
+                            connection: "SMB2"
+                        }
+                    ]
+                }
+            ],
+            smb:[
+                { name:"SMB1",
+                  ip: "10.10.11.0/24"
+                },
+                { name:"SMB2",
+                  ip: "10.10.11.0/24"
+                },
+                { name:"SMB3",
+                  ip: "10.10.11.0/24"
+                },
+                { name:"SMB4",
+                  ip: "10.10.11.0/24"
+                }
+            ]
+        }
+
+        var smbColor = ['255, 185, 2', "0, 188, 242", "180, 160, 255", "0, 178, 148"];
+
+        $(document).ready(function () {
+
+            function drawOutline(text, startX, startY){
+             var imgNode = new JTopo.Node('');
+             imgNode.setBound(startX + 50, startY+ 50, 100, 52); // 同时设置大小及位置
+             imgNode.setImage('./node.png');
+             imgNode.zIndex = 2;
+
+             //itemContainer.add(imgNode);
+             scene.add(imgNode);
+
+             var node = new JTopo.Node(text);
+             node.textPosition = "Middle_Center";
+             node.textOffsetY = 0; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.setLocation(startX,startY);
+             node.setSize(outlineWidth, outlineHeight);
+             node.borderWidth = 2; // 边框的宽度
+             node.borderColor = '238,238,238'; //边框颜色
+             node.fillColor = '255, 255, 255';
+             node.shadow = true;
+             node.shadowColor = 'rgba(221,221,221,0.5)';
+             node.shadowBlur = 10;
+             node.shadowOffsetX  = 1;
+             node.shadowOffsetY = 1;
+             //node.dragable = false;
+             node.zIndex = 1;
+
+             scene.add(node);
+            // itemContainer.add(node);
+             return node;
+           }
+
+            function drawItemWithinOutline(text, startX, startY, w, h, color){
+             var node = new JTopo.Node(text);
+             node.textPosition = "Middle_Center";
+             node.textOffsetY = -1; // 文字向下偏移8个像素
+             node.fontColor = '0,0,0';
+             node.font = '10px';
+             node.setLocation(startX,startY);
+             node.setSize(w, h);
+             node.borderWidth = 1;
+             node.borderColor = '238, 238, 238';
+             node.fillColor = color;
+             node.zIndex = 1;
+             node.paintSelected = function(a){
+
+                 a.strokeStyle = "rgba(50, 123, 212, 1)";
+                 a.fillStyle = "rgba("+node.fillColor+",1)";
+
+                 a.lineWidth = 1;
+                 a.strokeRect(-this.width / 2 +2, -this.height / 2 +2, this.width -4, this.height-4);
+                 a.fillRect(-this.width / 2 +2, -this.height / 2+2, this.width-4, this.height-4);
+
+                 a.fillStyle = "#327BD4";
+                 a.fillText(node.text,-node.text.length*2.5,9);
+
+                 a.restore();
+
+             }
+             node.paintMouseover = function(a){
+
+                 a.strokeStyle = "rgba(50, 123, 212, 1)";
+                 a.fillStyle = "rgba("+node.fillColor+",1)";
+
+                 a.lineWidth = 1;
+                 a.strokeRect(-this.width / 2 +2, -this.height / 2 +2, this.width -4, this.height-4);
+                 a.fillRect(-this.width / 2 +2, -this.height / 2+2, this.width-4, this.height-4);
+
+                 a.fillStyle = "rgba("+node.fontColor+",1)";
+                 a.fillText(node.text,-node.text.length*2.5,9);
+
+                 a.restore();
+
+             }
+             scene.add(node);
+             //itemContainer.add(node);
+             return node;
+           }
+
+            function drawCircle(startX, startY, color){
+                var circleNode = new JTopo.Node();
+                circleNode.setSize(10, 10);
+                circleNode.borderWidth = 2;
+                circleNode.borderRadius = 6;
+                circleNode.borderColor =  color;
+                circleNode.fillColor = '255, 255,255'; // 填充颜色
+                circleNode.setLocation(startX, startY);
+                circleNode.zIndex= 7;
+                scene.add(circleNode);
+                //labelContainer.add(circleNode);
+                return circleNode;
+           }
+
+            function drawSMBLabel(startX, startY, color, text){
+                var smbNode = new JTopo.Node(text);
+                smbNode.textPosition = "Middle_Center";
+                smbNode.textOffsetY = -5;
+                smbNode.fontColor = '0,0,0';
+                smbNode.setSize(smbWidth, smbHeight);
+                smbNode.fillColor = color; // 填充颜色
+                smbNode.setLocation(startX, startY);
+                smbNode.zIndex= 6;
+                //smbNode.dragable = false;
+                scene.add(smbNode);
+                //labelContainer.add(smbNode);
+                return smbNode;
+           }
+
+            function drawLink(node1, node2, color, dashedPattern){
+               var link = new JTopo.Link(node1, node2, "");
+                link.lineWidth = 1; // 线宽
+                link.strokeColor =  color; // 填充颜色
+                link.zIndex = 2;
+                link.dashedPattern = dashedPattern;
+                link.paintSelected = function(){
+                }
+                scene.add(link);
+
+           }
+
+            function drawFoldLink(nodeA, nodeZ, color) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, "");
+                link.direction=  'vertical';
+                // link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 1; // 线宽
+
+                link.strokeColor = color; // 线条颜色随机
+                link.zIndex= 2;
+                link.paint = function(g){
+                    g.beginPath();
+                    g.moveTo(nodeA.getBound().left + nodeA.getBound().width /2, nodeA.getBound().bottom);
+                    g.strokeStyle = 'rgba('+nodeZ.fillColor+',1)';
+                    g.lineTo(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 16);
+                    g.stroke();
+                    g.closePath();
+                    g.save();
+
+                    g.beginPath();
+                    g.fillStyle = 'rgba('+nodeZ.fillColor+',1)';
+                    g.arc(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 16, 5, 0, 2*Math.PI);
+                    g.fill();
+                    g.closePath();
+                    g.restore();
+
+                    g.beginPath();
+                    g.fillStyle = 'rgba(255,255,255,1)';
+                    g.arc(nodeA.getBound().left + nodeA.getBound().width /2, nodeZ.getBound().top+ 16, 3, 0, 2*Math.PI);
+                    g.fill();
+                    g.closePath();
+                    g.restore();
+
+                };
+                scene.add(link);
+                return link;
+            }
+
+            function drawBlank(startX, startY, w, h, zIndex){
+             var node = new JTopo.Node("");
+             node.setLocation(startX,startY);
+             node.setSize(w, h);
+             node.fillColor = "255,255,255";
+             //node.dragable = false;
+             node.zIndex = zIndex;
+             node.paintSelected = function(){
+             }
+             scene.add(node);
+           }
+
+            function drawContainer(dragble){
+                var container = new JTopo.Container('');
+                container.fillColor = '255,255,255';
+                container.onselect = null;
+                container.dragable = dragble;
+                container.childDragble = false;
+                container.areaSelect = false;
+                container.paintSelected = function(){
+                 }
+                scene.add(container);
+                return container;
+            }
+
+            function drawArrow(startX, startY, type){
+                 var arrNode = new JTopo.Node('');
+                 var leftHoverImg = new Image();
+                 var rightHoverImg = new Image();
+                 leftHoverImg.src = './left_hover.png';
+                 rightHoverImg.src = './right_hover.png';
+                 arrNode.setBound(startX, startY, 20, 16); // 同时设置大小及位置
+
+                 if(type === 0 ){
+                     arrNode.setImage('./left.png');
+                 }else {
+                     arrNode.setImage('./right.png');
+                 }
+                 arrNode.zIndex = 4;
+                 //arrNode.dragable = false;
+                // arrNode.paintSelected= function(a){}
+                 arrNode.click(function(event){
+
+                    if( type === 0){
+                        if (itemContainer.x < logicMarginY){
+                            itemContainer.selectedLocation = {x:itemContainer.x,y:itemContainer.y};
+                            itemContainer.mousedragHandler({dx:260,dy:0})
+                        }
+                    } else{
+                        if (itemContainer.x > -logicCanvasWidth ) {
+                            itemContainer.selectedLocation = {x: itemContainer.x, y: itemContainer.y};
+                            itemContainer.mousedragHandler({dx: -260, dy: 0})
+                        }
+                    }
+                 });
+                 arrNode.paintSelected = function(a){
+                     if( type == 0 ){
+                         a.drawImage(leftHoverImg,-10, -8, 20, 16);
+                         a.restore();
+                     }else {
+                         a.drawImage(rightHoverImg,-10, -8, 20, 16);
+                         a.restore();
+                     }
+
+                 }
+                 scene.add(arrNode);
+            }
+
+            var canvas = document.getElementById('canvas');
+            canvas.height = logicCanvasHeight;
+            canvas.width = logicCanvasWidth;
+            $('#container').width(logicCanvasWidth);
+            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+            stage.wheelZoom = 1.2
+
+
+
+            drawBlank(0, 0, logicMarginX + 10, logicCanvasHeight, 3);
+            drawBlank(logicCanvasWidth - logicMarginX - smbWidth - 5, 0, outlineHeight + logicMarginX, logicCanvasHeight, 3)
+            drawBlank(0, 0, logicCanvasWidth, 30, 5);
+
+            drawArrow(5, outlineHeight + logicMarginX, 0);
+            drawArrow(logicCanvasWidth - smbWidth - logicMarginX, outlineHeight + logicMarginX, 1);
+
+            //var itemContainer = drawContainer(true);
+            //var labelContainer = drawContainer(false);
+
+            var startX = logicMarginX;
+            var startY = logicMarginY;
+
+            var smbList = {};
+
+            for(var i = 0; i<rawData.smb.length; i++) {
+                var leftCircle = drawCircle(logicMarginX, startY + smbMarginTop + smbVerticalMargin * i, smbColor[i]);
+
+                var circleNode = new JTopo.Node();
+                circleNode.setSize(1, 1);
+                circleNode.fillColor = smbColor[i]; // 填充颜色
+                circleNode.setLocation(logicCanvasWidth - logicMarginX - smbWidth - 30, startY +4+ smbMarginTop + smbVerticalMargin * i);
+                circleNode.zIndex= 7;
+                scene.add(circleNode);
+                //labelContainer.add(circleNode);
+
+                var rightCircle = drawCircle(logicCanvasWidth - logicMarginX - smbWidth-4, startY + smbMarginTop + smbVerticalMargin * i, smbColor[i]);
+                var smbLabel = drawSMBLabel(logicCanvasWidth - logicMarginX - smbWidth, startY + smbMarginTop + smbVerticalMargin * i - 10, smbColor[i], rawData.smb[i].name+" "+  rawData.smb[i].ip);
+                smbList[rawData.smb[i].name] = smbLabel;
+                drawLink(leftCircle, circleNode, smbColor[i]);
+                drawLink(rightCircle, circleNode, smbColor[i], 5);
+            }
+
+            startX += logicMarginX;
+
+            for(var i = 0; i<rawData.networkItems.length; i++) {
+                 var cNetItem = rawData.networkItems[i];
+                 drawOutline(cNetItem.name, startX, startY);
+
+                 var ethnetWidth = (outlineWidth - ethnetCenterMargin * (cNetItem.ethnet.length - 1)) / cNetItem.ethnet.length ;
+                 for(var j = 0; j < cNetItem.ethnet.length; j++){
+                    var ethnetNode = drawItemWithinOutline(cNetItem.ethnet[j].name, startX + (ethnetWidth + ethnetCenterMargin) * j , startY + outlineHeight - 2 * ethnetHeight - switchHeight, ethnetWidth, ethnetHeight, '244, 253, 255');
+                    drawFoldLink(ethnetNode, smbList[cNetItem.ethnet[j].connection], smbList[cNetItem.ethnet[j].connection].fillColor)
+                 }
+
+                 var mellenoxWidth = (outlineWidth - ethnetCenterMargin * (cNetItem.mellenox.length - 1)) / cNetItem.mellenox.length ;
+                 for(var j = 0; j < cNetItem.mellenox.length; j++){
+                    drawItemWithinOutline(cNetItem.mellenox[j].name, startX + (mellenoxWidth + ethnetCenterMargin) * j , startY + outlineHeight - ethnetHeight, mellenoxWidth, ethnetHeight, '231, 250, 241');
+                 }
+                drawItemWithinOutline(cNetItem.switch, startX, startY + outlineHeight - ethnetHeight - switchHeight, switchWidth, switchHeight, '244, 244, 244');
+
+                 startX += outlineWidth + outlineCenterMagin;
+
+            }
+
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            /* width: 800px; */
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+
+</html>

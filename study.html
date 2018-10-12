@@ -1,0 +1,131 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <script type="text/javascript" src="./jquery.snippet.min.js"></script>
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 节点
+            function newNode(x, y, w, h, text) {
+                var node = new JTopo.Node(text);
+                node.setLocation(x, y);
+                node.setSize(w, h);
+                scene.add(node);
+                return node;
+            }
+
+            // 简单连线
+            function newLink(nodeA, nodeZ, text, dashedPattern) {
+                var link = new JTopo.Link(nodeA, nodeZ, text);
+                link.lineWidth = 3; // 线宽
+                link.dashedPattern = dashedPattern; // 虚线
+                link.bundleOffset = 60; // 折线拐角处的长度
+                link.bundleGap = 20; // 线条之间的间隔
+                link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+                link.strokeColor = '0,200,255';
+                scene.add(link);
+                return link;
+            }
+
+            // 折线
+            function newFoldLink(nodeA, nodeZ, text, direction, dashedPattern) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, text);
+                link.direction = direction || 'horizontal';
+                link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 3; // 线宽
+                link.bundleOffset = 60; // 折线拐角处的长度
+                link.bundleGap = 20; // 线条之间的间隔
+                link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+                link.strokeColor = JTopo.util.randomColor(); // 线条颜色随机
+                link.dashedPattern = dashedPattern;
+                scene.add(link);
+                return link;
+            }
+
+            // 二次折线
+            function newFlexionalLink(nodeA, nodeZ, text, direction, dashedPattern) {
+                var link = new JTopo.FlexionalLink(nodeA, nodeZ, text);
+                link.direction = direction || 'horizontal';
+                link.arrowsRadius = 10;
+                link.lineWidth = 3; // 线宽
+                link.offsetGap = 85; //连接节点直线的长度，当中的线是否水平就靠这个设置了
+                link.bundleGap = 15; // 线条之间的间隔
+                link.textOffsetY = 10; // 文本偏移量（向下15个像素）
+                link.strokeColor = '0,250,0';
+                link.dashedPattern = dashedPattern;
+                scene.add(link);
+                return link;
+            }
+
+            // 曲线
+            function newCurveLink(nodeA, nodeZ, text) {
+                var link = new JTopo.CurveLink(nodeA, nodeZ, text);
+                link.lineWidth = 3; // 线宽
+                scene.add(link);
+                return link;
+            }
+
+            var canvas = document.getElementById('canvas');
+            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+
+            stage.wheelZoom = 1.2;
+
+            var node = new JTopo.Node("Hello");    // 创建一个节点
+            node.setLocation(200, 100);    // 设置节点坐标                    
+            node.setSize(100, 80);
+            scene.add(node); // 放入到场景中
+
+
+            // node.rotate = Math.random(); // 旋转角度
+            // node.scaleX = Math.random() * 10; // 水平方向的缩放
+            // node.scaleY = Math.random() * 10; // 垂直方向的缩放
+            // node.alpha = Math.random();  // 透明度
+            node.setImage('123.jpg'); // 设置图片
+
+            var nodeFrom = new JTopo.Node("from");
+            nodeFrom.setLocation(250, 250);
+            scene.add(nodeFrom);
+
+            var nodeTo = new JTopo.Node("To");
+            nodeTo.setLocation(350, 250);
+            scene.add(nodeTo);
+
+            var link = new JTopo.Link(nodeFrom, nodeTo); // 增加连线
+            scene.add(link);
+
+
+            var from = newNode(200, 350, 30, 30);
+            from.dragable = true;
+            var to = newNode(400, 100, 30, 30);
+            var link = newFlexionalLink(from, to, '', 'vertical');
+
+            from = newNode(600, 100, 30, 30);
+            to = newNode(650, 200, 30, 30);
+            link = newFlexionalLink(from, to, '', 'vertical', 2);
+            link = newFlexionalLink(from, to, '', 'vertical', 2);
+
+
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <canvas width="800" height="550" id="canvas"></canvas>
+    </div>
+</body>
+
+</html>

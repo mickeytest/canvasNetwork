@@ -1,0 +1,551 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./jquery1.6.4.js"></script>
+    <!-- <script type="text/javascript" src="./jquery.snippet.min.js"></script> -->
+    <script type="text/javascript" src="./jtopo-0.4.8-min.js"></script>
+    <script>
+
+        var logicPoolHeight = 88 * 0.75;
+        var logicPoolWidth = 650 * 0.75;
+        var logicPoolRowHeight = 150;
+
+        var logicNodeWidth = 36;
+        var logicNodeHeight = 48;
+        var logicNodeWidthMargin = 18;
+        var logicNodeHeightMargin = 18;
+
+        var logicNodeHeightBox = logicNodeHeight + logicNodeWidthMargin;
+        var logicNodeWidthBox  = logicNodeWidth + logicNodeHeightMargin;
+
+        var logicCanvasWidth = 800;
+        var logicCanvasHeight = 1000;
+
+        var logicMarginY = 50;
+
+        $(document).ready(function () {
+
+
+            var rawData = {
+                    "pools": [
+                        {
+                            "id": 1,
+                            "display":"pool-1",
+                            "name": "Cluster Shared ReFS Volumes",
+                            "path": "c:ClusterStorageVolume",
+                            "spaces": [
+                                {
+                                    "id": 1,
+                                    "name": "storage-1",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-1",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "SSD-2",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "storage-2",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-3",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "storage-3",
+                                    "performance": [],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-1",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "storage-4",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-4",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "SSD-5",
+                                            "type": "SSD"
+                                        },
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "storage-4",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-4",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "display":"pool-2",
+                            "name": "Cluster Shared ReFS Volumes",
+                            "path": "c:ClusterStorageVolume",
+                            "spaces": [
+                                {
+                                    "id": 1,
+                                    "name": "storage-1",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-1",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "SSD-2",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "storage-2",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-3",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "SSD-4",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "storage-4",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-4",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": 3,
+                            "display":"pool-3",
+                            "name": "Cluster Shared ReFS Volumes",
+                            "path": "c:ClusterStorageVolume",
+                            "spaces": [
+                                {
+                                    "id": 1,
+                                    "name": "storage-1",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-1",
+                                            "type": "SSD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "SSD-2",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "storage-2",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-3",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "storage-3",
+                                    "performance": [],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 4,
+                                    "name": "storage-4",
+                                    "performance": [
+                                        {
+                                            "id": 1,
+                                            "name": "SSD-4",
+                                            "type": "SSD"
+                                        }
+                                    ],
+                                    "capability": [
+                                        {
+                                            "id": 1,
+                                            "name": "HHD-1",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "HHD-2",
+                                            "type": "HHD"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "HHD-3",
+                                            "type": "HHD"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+
+            var pools = []
+
+            function newNode(x, y, w, h, text, pic, isNode = 0) {
+                var node = new JTopo.Node(text);
+                node.fontColor = '0,0,0';
+                node.setLocation(x, y);
+                node.setSize(w, h);
+                node.dragable = false;
+                node.textPosition = "Bottom_Center";
+                if (!pic) {
+                    if (w == 1 && h == 1)  {
+                        node.fillColor = '227, 227, 0';
+                    }else {
+                        node.fillColor = '245, 245, 245';
+                        node.borderRadius = 5; // 圆角
+                        node.borderWidth = 1; // 边框的宽度
+                        node.borderColor = '220,220,220'; //边框颜色
+                        node.alpha = 0.7; //透明度
+                        if( isNode === 1 ) {
+                            node.shadowColor= "rgba(16,108,206,0.5)";
+                            node.shadowOffsetX= 2;
+                            node.shadowOffsetY= 4;
+                             node.shadow = true;
+                        }
+                    }
+                } else { node.setImage(pic); }
+                if (isNode == 1) {
+                    node.textPosition = "Middle_Left";
+                    node.text = node.text + ' ';
+                } else if (isNode == 2) {
+                    node.textPosition = "Bottom_Left";
+                } else if (isNode == 3) {
+                    node.textPosition = "Middle_Center";
+                    node.fontColor = "255,255,255";
+                } else if (isNode == 4) {
+                    node.textPosition = "Top_Center";
+                }
+                scene.add(node);
+                return node;
+            }
+
+            function newFoldLink(nodeA, nodeZ, text, direction, dashedPattern) {
+                var link = new JTopo.FoldLink(nodeA, nodeZ, text);
+                link.direction = direction == 1 ? 'vertical' : 'horizontal';
+                // link.arrowsRadius = 15; //箭头大小
+                link.lineWidth = 1; // 线宽
+                link.bundleOffset = 60; // 折线拐角处的长度
+                link.bundleGap = 20; // 线条之间的间隔
+                link.textOffsetY = 3; // 文本偏移量（向下3个像素）
+                // link.strokeColor = JTopo.util.randomColor(); // 线条颜色随机
+                link.strokeColor = 'black'; // 线条颜色随机
+                link.dashedPattern = dashedPattern;
+                scene.add(link);
+                return link;
+            }
+
+            function newDiskNodes(connection, x, y, performanceRaw, type = 1){
+                if( performanceRaw.length > 0 ) {
+                    var border = newNode(x, y, logicNodeWidthBox * performanceRaw.length + logicNodeWidthMargin, logicNodeHeightBox + logicNodeHeightMargin, "", null, type);
+                    newFoldLink(connection, border, '', 1);
+                    for(let i = 0; i < performanceRaw.length ; i++ ){
+                        SSD = newNode(x + logicNodeWidthMargin + i * logicNodeWidthBox, y + logicNodeHeightMargin / 1.5 , logicNodeWidth, logicNodeHeight, performanceRaw[i].name, performanceRaw[i].type === 'SSD'? 'ssd.PNG' : 'disk.PNG');
+                    }
+                    return border;
+                }
+                return null;
+            }
+
+            function newStorages(index){
+                var poolNode = pools[index];
+                var storagesRaw  = rawData.pools[index].spaces;
+                var connection = new newNode((poolNode.getBound().left * 3 / 4 + poolNode.getBound().right / 4), poolNode.getBound().bottom, 1, 1);
+
+
+                for (let i = 0; i < storagesRaw.length; i++) {
+                    var starterX = (poolNode.getBound().left * 3 / 4 + poolNode.getBound().right / 4) + logicNodeWidth;
+                    var starterY = poolNode.getBound().bottom + logicNodeHeightMargin + i * (logicNodeHeightBox + logicNodeHeightMargin *2);
+                    var border = newDiskNodes(connection, starterX, starterY , storagesRaw[i].performance, 1)
+                    if(storagesRaw[i].performance.length > 0 ){
+                        starterX = starterX + logicNodeWidthBox * storagesRaw[i].performance.length + logicNodeWidthMargin * 2;
+                        var pConnection = new newNode(starterX - logicNodeWidthMargin, starterY + (logicNodeHeightBox + logicNodeHeightMargin) / 2, 1, 1);
+                        newDiskNodes(pConnection, starterX, starterY, storagesRaw[i].capability, 2)
+                    }else {
+                        newDiskNodes(connection, starterX, starterY, storagesRaw[i].capability, 2)
+                    }
+                }
+            }
+
+            function newPool(x, y, index) {
+                var pool = newNode(x, y, logicPoolWidth, logicPoolHeight, rawData.pools[index].name, 'pool.PNG', 4);
+                pools[index] = pool;
+                if (rawData.pools[index].isexpanded === true) {
+                    newStorages(index);
+                }
+                pool.mouseup(function (event) {
+                    scene.clear();
+                    if (rawData.pools[index].isexpanded === true) {
+                       //restExpandStatus();
+                       rawData.pools[index].isexpanded = false;
+                    }
+                    else {
+                       //restExpandStatus();
+                       rawData.pools[index].isexpanded = true;
+                       newStorages(index);
+                    }
+                    newPools(pools[0].x, pools[0].y);
+                })
+            }
+
+            function restExpandStatus(){
+               for (let i = 0; i < rawData.pools.length; i++) {
+                rawData.pools[i].isexpanded = false;
+            }
+            }
+
+            function newPools(x, y) {
+                for (let i = 0; i < rawData.pools.length; i++) {
+                    if (i == 0) {
+                        var res = newPool(x, y, i);
+                    }
+                    else {
+                        var h = pools[i - 1].getBound().top + ((rawData.pools[i-1].isexpanded) ? rawData.pools[i-1].spaces.length * (logicNodeHeightBox + logicNodeWidthMargin * 2) :0);
+                        newPool(x, h + logicPoolRowHeight, i);
+                    }
+                }
+
+            }
+
+            var canvas = document.getElementById('canvas');
+            canvas.height = logicCanvasHeight;
+            canvas.width = logicCanvasWidth;
+            $('#container').width(logicCanvasWidth);
+            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+            stage.wheelZoom = 1.2;
+
+            var startX = (logicCanvasWidth - logicPoolWidth) / 2;
+
+            var currentY = logicMarginY;
+            restExpandStatus();
+            var pool = newPools(startX, currentY);
+
+
+        });
+
+    </script>
+    <style>
+        .container {
+            margin: 0 auto;
+            /* width: 800px; */
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <canvas id="canvas"></canvas>
+    </div>
+</body>
+
+</html>
